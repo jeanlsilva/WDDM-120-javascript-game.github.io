@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createBoard(20);
 
     function start(bombs) {
-        let timer = 300;
+        let timer = 180;
         isGameOver = false;
         timerArea.style.visibility = 'visible';
         flagsArea.style.visibility = 'visible';
@@ -99,6 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const minutes = Math.floor(timer / 60);
             const seconds = ((timer - minutes * 60));
             timerSpan.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            if (timer == 0) {
+                gameOver();
+            }
         }, 1000);
     }
 
@@ -234,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const flagCount = flagsArea.querySelector('span');
         flagCount.innerHTML = 20;
         const timerSpan = timerArea.querySelector('span');
-        timerSpan.innerHTML = '5:00';
+        timerSpan.innerHTML = '3:00';
         squares = [];
         levels.style.display = 'flex';
         timerArea.style.visibility = 'hidden';
