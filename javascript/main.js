@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     const flagsArea = document.querySelector('#flags');
+    const flagCount = flagsArea.querySelector('span');
     const timerArea = document.querySelector('#timer');
     const faceArea = document.querySelector('#face');
     const faceButton = faceArea.querySelector('img');
@@ -19,16 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     easy.addEventListener('click', () => {
         levels.style.display = 'none';
+        flagCount.innerHTML = '10';
         start(10);
     });
 
     intermediate.addEventListener('click', () => {
         levels.style.display = 'none';
+        flagCount.innerHTML = '20';
         start(20);
     });
 
     hard.addEventListener('click', () => {
         levels.style.display = 'none';
+        flagCount.innerHTML = '30';
         start(30);
     });
 
@@ -86,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createBoard(20);
 
     function start(bombs) {
+        bombAmount = bombs;
         let timer = 180;
         isGameOver = false;
         timerArea.style.visibility = 'visible';
@@ -106,19 +111,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addFlag(square) {
+        console.log({ flags, bombAmount })
         if (isGameOver) return;
-        if (!square.classList.contains('checked') && (flags < bombAmount)) {
+        if (!square.classList.contains('checked') && (flags <= bombAmount)) {
             if (!square.classList.contains('flag')) {
-                square.classList.add('flag');
-                square.innerHTML = '🚩';
-                flags++;
-                checkForWin()
-                const flagCount = flagsArea.querySelector('span');
-                flagCount.innerHTML = 20 - flags;
+                if (flags < bombAmount) {
+                    square.classList.add('flag');
+                    square.innerHTML = '🚩';
+                    flags++;
+                    checkForWin()
+                    flagCount.innerHTML = bombAmount - flags;
+                }
             } else {
                 square.classList.remove('flag');
                 square.innerHTML = '';
                 flags--;
+                flagCount.innerHTML = bombAmount - flags;
             }
         }
     }
