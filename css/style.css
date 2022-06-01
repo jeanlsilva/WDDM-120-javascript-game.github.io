@@ -1,0 +1,78 @@
+.container {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.grid {
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #CCCCCC;
+}
+
+.grid div {
+    height: 38px;
+    width: 38px;
+    border: 1px solid #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.grid div[data="1"] {
+    color: green;
+}
+
+.grid div[data="2"] {
+    color: yellow;
+}
+
+.grid div[data="3"] {
+    color: orange;
+}
+
+.grid div[data="4"] {
+    color: red;
+}
+
+.grid div[data="5"] {
+    color: black;
+}
+
+.checked {
+    background-color: #AAAAAA;
+}
+
+.bomb {
+    background-color: #00FFFF;
+}
+
+.bomb-shown {
+    background-color: orange;
+}
+
+.header {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #999999;
+    border: 1px solid #333333;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.timer, .smiley, .flags {
+    flex: 1
+}
+
+.smiley {
+    display: flex;
+    justify-content: center;
+}
+
+.flags {
+    font-size: 14px;
+}

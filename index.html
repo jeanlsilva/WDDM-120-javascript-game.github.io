@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css"></link>
+    <title>Minesweeper</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="timer" id="timer">
+                <p>Time: <span></span></p>
+            </div>
+            <div class="smiley" id="face">
+                <img src="./images/smiley-face.png" alt="face" width="50" />
+            </div>
+            <div class="flags" id="flags">
+                <p>Remaining flags: <span>20</span></p>
+            </div>
+        </div>
+        <div class="grid"></div>
+    </div>
+    <audio src="./audio/explosion.wav" id="explosion"></audio>
+    <audio src="./audio/win.wav" id="win"></audio>
+    <script src="./javascript/main.js"></script>
+</body>
+</html>
