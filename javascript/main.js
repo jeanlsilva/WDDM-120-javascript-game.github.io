@@ -6,21 +6,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const faceButton = faceArea.querySelector('img');
     const explosionAudio = document.querySelector('#explosion');
     const winAudio = document.querySelector('#win');
+    const easy = document.querySelector('#easy');
+    const intermediate = document.querySelector('#intermediate');
+    const hard = document.querySelector('#hard');
+    const levels = document.querySelector('.levels');
     let width = 10;
     let bombAmount = 20;
     let squares = [];
-    let isGameOver = false;
+    let isGameOver = true;
     let interval = 0;
+    let flags = 0;
+
+    easy.addEventListener('click', () => {
+        levels.style.display = 'none';
+        start(10);
+    });
+
+    intermediate.addEventListener('click', () => {
+        levels.style.display = 'none';
+        start(20);
+    });
+
+    hard.addEventListener('click', () => {
+        levels.style.display = 'none';
+        start(30);
+    });
 
     faceButton.addEventListener('click', () => {
+        faceButton.setAttribute('src', 'images/smiley-face.png')
         restart();
     });
 
-    function createBoard() {
-        let timer = 300;
-        faceButton.setAttribute('src', 'images/smiley-face.png')
-        const bombsArray = Array(bombAmount).fill('bomb');
-        const emptyArray = Array(width*width - bombAmount).fill('valid')
+    function createBoard(bombs) {
+        bombAmount = bombs;
+        const bombsArray = Array(bombs).fill('bomb');
+        const emptyArray = Array(width*width - bombs).fill('valid')
 
         const gameArray = emptyArray.concat(bombsArray);
 
@@ -61,9 +81,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 squares[i].setAttribute('data', total);
             }
         }
+    }
 
+    createBoard(20);
+
+    function start(bombs) {
+        let timer = 300;
+        isGameOver = false;
+        timerArea.style.visibility = 'visible';
+        flagsArea.style.visibility = 'visible';
+        grid.innerHTML = '';
+        createBoard(bombs);
         interval = setInterval(() => {
             const timerSpan = timerArea.querySelector('span');
+            timerSpan.innerHTML = '';
             timer = timer - 1;
             const minutes = Math.floor(timer / 60);
             const seconds = ((timer - minutes * 60));
@@ -71,10 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    createBoard();
-
     function addFlag(square) {
-        
         if (isGameOver) return;
         if (!square.classList.contains('checked') && (flags < bombAmount)) {
             if (!square.classList.contains('flag')) {
@@ -107,7 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             checkSquare(square, currentId) 
         }
-        square.classList.add('checked');
+        if (!square.classList.contains('bomb')) {
+            square.classList.add('checked');
+        }
     }
 
     function checkSquare(square, currentId) {
@@ -177,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkForWin() {
         let matches = 0;
-
+        console.log
         for (let i=0; i < squares.length; i++) {
             if (squares[i].classList.contains('flag') && squares[i].classList.contains('bomb')) {
                 matches++;
@@ -185,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (matches === bombAmount) {
                 console.log('WIN!');
                 winAudio.pause();
-                winAudio.currentTIme = 0;
+                winAudio.currentTime = 0;
                 winAudio.play();
                 faceButton.setAttribute('src', 'images/winner-face.png')
                 isGameOver = true;
@@ -195,13 +225,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function restart() {
-        grid.innerHTML = '';
-        isGameOver = false;
+        squares.forEach(square => {
+            square.innerHTML = '';
+            square.style.backgroundColor = '#CCCCCC';
+        })
         clearInterval(interval);
         flags = 0;
         const flagCount = flagsArea.querySelector('span');
         flagCount.innerHTML = 20;
-        createBoard();
+        const timerSpan = timerArea.querySelector('span');
+        timerSpan.innerHTML = '5:00';
+        squares = [];
+        levels.style.display = 'flex';
+        timerArea.style.visibility = 'hidden';
+        flagsArea.style.visibility = 'hidden';
     }
 });
 

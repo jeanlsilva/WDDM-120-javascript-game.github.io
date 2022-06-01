@@ -45,10 +45,6 @@
     background-color: #AAAAAA;
 }
 
-.bomb {
-    background-color: #00FFFF;
-}
-
 .bomb-shown {
     background-color: orange;
 }
@@ -73,6 +69,32 @@
     justify-content: center;
 }
 
-.flags {
+.flags, .timer {
     font-size: 14px;
+    visibility: hidden;
+}
+
+.levels {
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+}
+
+#easy {
+    color: green;
+    cursor: pointer;
+}
+
+#intermediate {
+    color: yellow;
+    cursor: pointer;
+}
+
+#hard {
+    color: red;
+    cursor: pointer;
+}
+
+.levels .active {
+    font-weight: bold;
 }
